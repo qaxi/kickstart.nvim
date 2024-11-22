@@ -92,6 +92,7 @@ vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -927,18 +928,18 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -965,6 +966,46 @@ require('lazy').setup({
     },
   },
 })
+----------------------------------------------------------------------------------
+-- [[ My pluggins ]]
+
+----------------------------------------------------------------------------------
+-- [[ My overrides ]]
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', conceal = '¿', eol = '↴' }
+vim.opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
+
+vim.opt.relativenumber = true
+
+-- have to bee before lazy !!!!!
+-- vim.g.have_nerd_font = true
+
+----------------------------------------------------------------------------------
+-- [[ My customizations ]]
+
+-- remember position in file
+vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
+  pattern = { '*' },
+  callback = function()
+    if vim.fn.line '\'"' > 1 and vim.fn.line '\'"' <= vim.fn.line '$' then
+      vim.api.nvim_exec2('normal! g\'"', { output = false })
+    end
+  end,
+})
+
+----------------------------------------------------------------------------------
+-- [[ My Keymaps ]]
+---- NO NvimTree installed
+---- vim.keymap.set('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', { desc = 'NvimTree toggle wi[n]dow' })
+---- vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', { desc = 'NvimTr[e]e focus window' })
+
+-- vim.keymap.set("n", "<tab>", "<cmd>tabnext<CR>", { desc = "Next [Tab]" })
+-- vim.keymap.set("n", "<S-tab>", "<cmd>tabprevios<CR>", { desc = "Previous [Tab]" })
+
+-- TIP: Disable arrow keys in normal mode
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
