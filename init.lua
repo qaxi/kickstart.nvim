@@ -969,6 +969,9 @@ require('lazy').setup({
 ----------------------------------------------------------------------------------
 -- [[ My pluggins ]]
 
+require('mason').setup()
+require('mason-nvim-dap').setup()
+
 ----------------------------------------------------------------------------------
 -- [[ My overrides ]]
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', conceal = '¿', eol = '↴' }
